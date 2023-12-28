@@ -6,7 +6,6 @@ CREATE TABLE
     `id`          BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '用户ID',
     `username`    VARCHAR(255) NOT NULL COMMENT '用户名',
     `password`    VARCHAR(255) NOT NULL COMMENT '密码',
-    `salt`        VARCHAR(255) NOT NULL COMMENT '盐',
     `email`       VARCHAR(255) COMMENT '电子邮箱',
     `deleted`     BOOLEAN      NOT NULL DEFAULT FALSE COMMENT '删除标志',
     `update_id`   BIGINT       NOT NULL COMMENT '更新者ID',
