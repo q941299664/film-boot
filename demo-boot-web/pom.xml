@@ -33,6 +33,11 @@
             <groupId>com.tao.demo</groupId>
             <artifactId>demo-boot-system</artifactId>
         </dependency>
+        <!--引入项目movie模块-->
+        <dependency>
+            <groupId>com.tao.demo</groupId>
+            <artifactId>film-movie</artifactId>
+        </dependency>
         <!--springBoot 工具-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -66,6 +66,11 @@
                 <artifactId>demo-boot-system</artifactId>
                 <version>${demo-boot.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.tao.demo</groupId>
+                <artifactId>film-movie</artifactId>
+                <version>${demo-boot.version}</version>
+            </dependency>
             <!-- Spring Boot Web Starter，用于构建web，包含了Spring MVC，Tomcat等 -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
@@ -333,6 +338,7 @@
         <module>demo-boot-common</module>
         <module>demo-boot-web</module>
         <module>demo-boot-system</module>
+        <module>film-movie</module>
     </modules>
 
     <packaging>pom</packaging>

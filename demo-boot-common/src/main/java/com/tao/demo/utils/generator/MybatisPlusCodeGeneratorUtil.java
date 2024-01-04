@@ -50,11 +50,11 @@ public class MybatisPlusCodeGeneratorUtil {
   private static final String WEB_MODEL_NAME = "\\demo-boot-web";
   
   public static void main(String[] args) {
-    TableTypeEnum tableTypeEnum = TableTypeEnum.SYS_TABLES;
+    TableTypeEnum tableTypeEnum = TableTypeEnum.FILM_TABLES;
     Collection<String> tables = tableTypeEnum.getTables();
     log.info("开始生成{}对应数据表代码", tableTypeEnum.getName());
     log.info("生成表：{}", tables);
-    MybatisPlusCodeGeneratorUtil.generatorTable("demo-boot-system", tables);
+    MybatisPlusCodeGeneratorUtil.generatorTable(tableTypeEnum.getModelName(), tableTypeEnum.getPrefix(), tables);
     log.info("生成{}对应数据表代码完成", tableTypeEnum.getName());
   }
   
@@ -63,8 +63,8 @@ public class MybatisPlusCodeGeneratorUtil {
    *
    * @param tables 表名集合
    */
-  public static void generatorTable(String moduleName, Collection<String> tables) {
-    generatorTable(moduleName, tables.toArray(new String[0]));
+  public static void generatorTable(String moduleName, String prefix, Collection<String> tables) {
+    generatorTable(moduleName, prefix, tables.toArray(new String[0]));
   }
   
   /**
@@ -72,8 +72,8 @@ public class MybatisPlusCodeGeneratorUtil {
    *
    * @param tableTypeEnum 模块枚举对应表名
    */
-  public static void generatorTable(String moduleName, TableTypeEnum tableTypeEnum) {
-    generatorTable(moduleName, tableTypeEnum.getTables());
+  public static void generatorTable(String moduleName,String prefix, TableTypeEnum tableTypeEnum) {
+    generatorTable(moduleName, prefix, tableTypeEnum.getTables());
   }
   
   /**
@@ -81,7 +81,7 @@ public class MybatisPlusCodeGeneratorUtil {
    *
    * @param tables 表名数组
    */
-  public static void generatorTable(String moduleName, String... tables) {
+  public static void generatorTable(String moduleName, String prefix, String... tables) {
     
     String projectPath = System.getProperty("user.dir");
     String modulePath = projectPath + "\\" + moduleName;
@@ -90,7 +90,7 @@ public class MybatisPlusCodeGeneratorUtil {
     // 配置
     Map<OutputFile, String> pathInfo = Maps.newHashMap();
     pathInfo.put(OutputFile.xml, modulePath + MAPPER_XML_PATH);
-    pathInfo.put(OutputFile.controller, projectPath + WEB_MODEL_NAME + MAVEN_PATH + PACKAGE_PATH + CONTROLLER_PATH);
+    pathInfo.put(OutputFile.controller, projectPath + WEB_MODEL_NAME + MAVEN_PATH + PACKAGE_PATH  + CONTROLLER_PATH +"/"+ prefix);
     
     //        数据库的配置信息
     FastAutoGenerator.create(URL, USERNAME, PASSWORD)
@@ -116,7 +116,7 @@ public class MybatisPlusCodeGeneratorUtil {
       .strategyConfig(builder ->
           builder.addInclude(tables) // 设置需要生成的表名
             .addTableSuffix("_tb") // 过滤表后缀
-            .addTablePrefix("sys_") // 过滤表前缀
+            .addTablePrefix(prefix +"_") // 过滤表前缀
             // Entity 策略配置
             .entityBuilder()
             .superClass("com.tao.demo.core.domain.BaseEntity") // 设置父类
@@ -134,7 +134,7 @@ public class MybatisPlusCodeGeneratorUtil {
             .enableFileOverride() // 覆盖已生成文件
             // Controller 策略配置
             .controllerBuilder()
-            .superClass("com.tao.demo.core.controller.BaseBaseController") // 设置父类
+            .superClass("com.tao.demo.core.controller.BaseController") // 设置父类
             .enableHyphenStyle() // 开启驼峰转连字符
             .enableRestStyle() // 开启生成@RestController控制器
             // Service 策略配置

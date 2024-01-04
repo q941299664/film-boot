@@ -14,9 +14,9 @@ import lombok.ToString;
  */
 @ToString
 public class MySqlConditionConstant extends SqlCondition {
-  public static final String LT = "%s < #{%s}";
-  public static final String LE = "%s <= #{%s}";
-  public static final String GT = "%s > #{%s}";
-  public static final String GE = "%s >= #{%s}";
-  public static final String NE = "%s <> #{%s}";
+  public static final String LT = "%s&lt;#{%s}";
+  public static final String LE = "%s&lt;=#{%s}";
+  public static final String GT = "%s&gt;#{%s}";
+  public static final String GE = "%s&gt;=#{%s}";
+  public static final String NE = "%s&lt;&gt;#{%s}";
 }

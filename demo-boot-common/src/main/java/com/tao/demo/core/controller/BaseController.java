@@ -9,10 +9,7 @@ import com.tao.demo.core.domain.BaseEntity;
 import com.tao.demo.utils.MybatisUtil;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -30,7 +27,7 @@ import java.util.Objects;
  */
 
 @Log4j2
-public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends BaseEntity> implements BaseControllerInterface<T, Integer> {
+public abstract class BaseController<S extends MPJDeepService<T>, T extends BaseEntity> implements BaseControllerInterface<T, Integer> {
   /**
    * 通过@Resource注解注入baseService
    */
@@ -43,7 +40,7 @@ public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends 
    * @param vo 实体
    * @return 新增结果
    */
-  @PostMapping("/save")
+  @PostMapping
   public T baseSave(@RequestBody T vo) {
     return baseService.save(vo) ? vo : null;
   }
@@ -54,7 +51,7 @@ public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends 
    * @param voList 实体
    * @return 批量新增结果
    */
-  @PostMapping("/save/batch")
+  @PostMapping("/batch")
   public List<T> baseSaveBatch(@RequestBody List<T> voList) {
     return baseService.saveBatch(voList) ? voList : null;
   }
@@ -65,20 +62,20 @@ public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends 
    * @param id 主键id
    * @return 删除结果
    */
-  @PostMapping("/remove")
-  public boolean baseRemoveById(@RequestParam Integer id) {
+  @DeleteMapping("/{id}")
+  public boolean baseRemoveById(@PathVariable Integer id) {
     return baseService.removeById(id);
   }
   
   /**
-   * 根据ids列表批量删除实体接口
+   * 根据ids字符串批量删除实体接口 使用【,】拼接字符串
    *
    * @param ids 主键id
    * @return 删除结果
    */
-  @PostMapping("/remove/batch")
-  public boolean baseRemoveBatchByIds(@RequestBody List<Integer> ids) {
-    return baseService.removeByIds(ids);
+  @DeleteMapping("/batch/{ids}")
+  public boolean baseRemoveBatchByIds(@PathVariable String ids){
+    return baseService.removeByIds(MybatisUtil.ids2List(ids));
   }
   
   /**
@@ -87,7 +84,7 @@ public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends 
    * @param vo 实体
    * @return 更新结果
    */
-  @PostMapping("/update")
+  @PutMapping
   public boolean baseUpdateById(@RequestBody T vo) {
     return baseService.updateById(vo);
   }
@@ -98,7 +95,7 @@ public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends 
    * @param vo 实体
    * @return 批量更新结果
    */
-  @PostMapping("/update/batch")
+  @PutMapping("/batch")
   public boolean baseUpdateBatchById(@RequestBody List<T> vo) {
     return baseService.updateBatchById(vo);
   }
@@ -109,8 +106,8 @@ public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends 
    * @param id 主键id
    * @return 实体
    */
-  @GetMapping("/one")
-  public T baseGetById(@RequestParam Integer id) {
+  @GetMapping("/{id}")
+  public T baseGetById(@PathVariable Integer id) {
     return baseService.getById(id);
   }
   
@@ -125,23 +122,21 @@ public abstract class BaseBaseController<S extends MPJDeepService<T>, T extends 
   @GetMapping("/page")
   public IPage<T> basePage(@RequestParam Integer page, @RequestParam Integer size, @RequestBody(required = false) T vo) {
     IPage<T> iPage = new Page<>(page, size);
-    QueryWrapper<T> queryWrapper = MybatisUtil.entity2QueryWrapper(vo);
-    if (Objects.isNull(queryWrapper)) {
-      return baseService.page(iPage);
-    }
-    queryWrapper.orderByDesc("updateTime");
+    QueryWrapper<T> queryWrapper = new QueryWrapper<>(vo);
     return baseService.page(iPage, queryWrapper);
   }
   
   /**
-   * 查询所有记录
+   * 条件查询
    *
    * @param vo 查询条件
    * @return 所有记录
    */
-  @GetMapping("/query")
+  @GetMapping
   public List<T> baseList(@RequestBody(required = false) T vo) {
-    return baseService.list();
+    QueryWrapper<T> queryWrapper = new QueryWrapper<>(vo);
+    return baseService.list(queryWrapper);
   }
+  
   
 }

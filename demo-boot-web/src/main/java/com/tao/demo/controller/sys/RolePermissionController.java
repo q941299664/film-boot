@@ -1,6 +1,6 @@
-package com.tao.demo.controller;
+package com.tao.demo.controller.sys;
 
-import com.tao.demo.core.controller.BaseBaseController;
+import com.tao.demo.core.controller.BaseController;
 import com.tao.demo.domain.entity.RolePermission;
 import com.tao.demo.service.RolePermissionService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/role-permission")
-public class RolePermissionController extends BaseBaseController<RolePermissionService, RolePermission> {
+public class RolePermissionController extends BaseController<RolePermissionService, RolePermission> {
 
 }

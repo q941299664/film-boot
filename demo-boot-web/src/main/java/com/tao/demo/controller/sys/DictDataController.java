@@ -1,6 +1,6 @@
-package com.tao.demo.controller;
+package com.tao.demo.controller.sys;
 
-import com.tao.demo.core.controller.BaseBaseController;
+import com.tao.demo.core.controller.BaseController;
 import com.tao.demo.domain.entity.DictData;
 import com.tao.demo.service.DictDataService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/dict-data")
-public class DictDataController extends BaseBaseController<DictDataService, DictData> {
+public class DictDataController extends BaseController<DictDataService, DictData> {
 
 }

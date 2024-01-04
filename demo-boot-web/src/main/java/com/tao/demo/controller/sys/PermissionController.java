@@ -1,6 +1,6 @@
-package com.tao.demo.controller;
+package com.tao.demo.controller.sys;
 
-import com.tao.demo.core.controller.BaseBaseController;
+import com.tao.demo.core.controller.BaseController;
 import com.tao.demo.domain.entity.Permission;
 import com.tao.demo.service.PermissionService;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/permission")
-public class PermissionController extends BaseBaseController<PermissionService, Permission> {
+public class PermissionController extends BaseController<PermissionService, Permission> {
 
 }

@@ -2,6 +2,7 @@ package com.tao.demo.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.tao.demo.constant.MySqlConditionConstant;
 import com.tao.demo.core.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,7 +28,7 @@ public class User extends BaseEntity {
   /**
    * 用户名
    */
-  @TableField("username")
+  @TableField(value = "username", condition = MySqlConditionConstant.LIKE)
   private String username;
   
   /**
@@ -39,7 +40,7 @@ public class User extends BaseEntity {
   /**
    * 电子邮箱
    */
-  @TableField("email")
+  @TableField(value = "email", condition = MySqlConditionConstant.LIKE)
   private String email;
   
   

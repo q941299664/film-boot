@@ -42,7 +42,7 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param ids 主键id集合
    * @return 批量删除结果
    */
-  boolean baseRemoveBatchByIds(List<K> ids);
+  boolean baseRemoveBatchByIds(String ids);
   
   /**
    * 更新

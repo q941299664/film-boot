@@ -1,6 +1,6 @@
-package com.tao.demo.controller;
+package com.tao.demo.controller.sys;
 
-import com.tao.demo.core.controller.BaseBaseController;
+import com.tao.demo.core.controller.BaseController;
 import com.tao.demo.core.domain.vo.R;
 import com.tao.demo.domain.entity.User;
 import com.tao.demo.domain.vo.LoginUserVO;
@@ -30,7 +30,7 @@ import java.util.Objects;
  */
 @RestController
 @RequestMapping("/user")
-public class UserController extends BaseBaseController<UserService, User> {
+public class UserController extends BaseController<UserService, User> {
   
   /**
    * 用户注册

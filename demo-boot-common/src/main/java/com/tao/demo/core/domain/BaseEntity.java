@@ -1,6 +1,7 @@
 package com.tao.demo.core.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.tao.demo.constant.MySqlConditionConstant;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
