@@ -5,6 +5,7 @@ import jakarta.annotation.Resource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * @projectName: demo-boot
@@ -64,8 +65,19 @@ public class UserCacheUtil {
    * @param permissions 权限列表
    */
   public static void setUserPermissionCache(Long userId, String permissions) {
-    // 设置用户角色列表缓存
-    redisUtil.lSet(getUserPermissionCacheKey(userId), permissions);
+    List<Object> userPermissionCache = getUserPermissionCache(userId);
+    AtomicReference<Boolean> isSet = new AtomicReference<>(false);
+    userPermissionCache.forEach(up->{
+      String sUp = (String) up;
+      if(sUp.equals(permissions)){
+        isSet.set(true);
+      }
+    });
+    if(!isSet.get()){
+      // 设置用户角色列表缓存
+      redisUtil.lSet(getUserPermissionCacheKey(userId), permissions);
+    }
+    
   }
   
   
@@ -87,8 +99,19 @@ public class UserCacheUtil {
    * @param roles  角色列表
    */
   public static void setUserRoleCache(Long userId, String roles) {
-    // 设置用户权限列表缓存
-    redisUtil.lSet(getUserRoleCacheKey(userId), roles);
+    List<Object> userRoleCache = getUserRoleCache(userId);
+    AtomicReference<Boolean> isSet = new AtomicReference<>(false);
+    userRoleCache.forEach(up->{
+      String sUp = (String) up;
+      if(sUp.equals(roles)){
+        isSet.set(true);
+      }
+    });
+    if(!isSet.get()){
+      // 设置用户权限列表缓存
+      redisUtil.lSet(getUserRoleCacheKey(userId), roles);
+    }
+    
   }
   
   /**

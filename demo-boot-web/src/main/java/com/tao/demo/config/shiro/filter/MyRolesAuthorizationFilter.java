@@ -3,6 +3,7 @@ package com.tao.demo.config.shiro.filter;
 import com.alibaba.fastjson2.JSON;
 import com.tao.demo.core.domain.vo.R;
 import com.tao.demo.enums.REnum;
+import com.tao.demo.utils.HttpServletUtils;
 import com.tao.demo.utils.JwtUtil;
 import com.tao.demo.utils.UserCacheUtil;
 import io.jsonwebtoken.MalformedJwtException;
@@ -26,7 +27,6 @@ import java.util.stream.Collectors;
  */
 @Log4j2
 public class MyRolesAuthorizationFilter extends AuthorizationFilter {
-  private static final String TOKEN_KEY = "x-access-token";
   
   @Override
   protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
@@ -39,7 +39,7 @@ public class MyRolesAuthorizationFilter extends AuthorizationFilter {
   protected boolean isAccessAllowed(ServletRequest request, ServletResponse resp, Object mappedValue) throws Exception {
     // 转换成http的请求和响应
     HttpServletRequest req = (HttpServletRequest) request;
-    String token = req.getHeader(TOKEN_KEY);
+    String token = req.getHeader(HttpServletUtils.TOKEN_KEY);
     if (token == null) {
       return false;
     }

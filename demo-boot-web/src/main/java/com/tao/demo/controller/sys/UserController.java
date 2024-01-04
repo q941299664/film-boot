@@ -3,22 +3,19 @@ package com.tao.demo.controller.sys;
 import com.tao.demo.core.controller.BaseController;
 import com.tao.demo.core.domain.vo.R;
 import com.tao.demo.domain.entity.User;
-import com.tao.demo.domain.vo.LoginUserVO;
-import com.tao.demo.domain.vo.LoginVO;
-import com.tao.demo.domain.vo.RegisterVO;
+import com.tao.demo.domain.vo.*;
+import com.tao.demo.enums.REnum;
 import com.tao.demo.exception.GlobalException;
 import com.tao.demo.service.UserService;
 import com.tao.demo.utils.JwtUtil;
 import com.tao.demo.utils.PasswordUtil;
+import jakarta.annotation.Resource;
 import jakarta.validation.Valid;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.BearerToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -91,4 +88,32 @@ public class UserController extends BaseController<UserService, User> {
     baseService.setLoginUserCache(user);
     return R.success(new LoginUserVO(user, token));
   }
+  
+  /**
+   * 获取当前登录用户详细信息
+   * @return 用户及角色权限信息
+   */
+  @GetMapping("/info")
+  public R<UserInfoVO> info(){
+    return R.success(baseService.getCurrLoginUser());
+  }
+  
+  /**
+   * 退出登录
+   * @return 退出登录错误码
+   */
+  @PostMapping("/logout")
+  public R<String> logout(){
+    return R.error(REnum.NOT_LOGIN);
+  }
+  
+  /**
+   * 获取当前用户菜单
+   * @return 菜单信息
+   */
+  @PostMapping("/menu")
+  public R<MenuVO> getMenuByCurrUser(){
+    return R.success(baseService.getMenuByCurrUser());
+  }
+  
 }

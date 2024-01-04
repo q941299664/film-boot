@@ -6,6 +6,8 @@ import com.github.yulichang.base.MPJBaseServiceImpl;
 import com.github.yulichang.wrapper.MPJLambdaWrapper;
 import com.tao.demo.domain.bo.UserRoleBo;
 import com.tao.demo.domain.entity.*;
+import com.tao.demo.domain.vo.MenuVO;
+import com.tao.demo.domain.vo.UserInfoVO;
 import com.tao.demo.enums.REnum;
 import com.tao.demo.exception.GlobalException;
 import com.tao.demo.mapper.UserMapper;
@@ -13,6 +15,8 @@ import com.tao.demo.service.RolePermissionService;
 import com.tao.demo.service.RoleService;
 import com.tao.demo.service.UserRoleService;
 import com.tao.demo.service.UserService;
+import com.tao.demo.utils.HttpServletUtils;
+import com.tao.demo.utils.JwtUtil;
 import com.tao.demo.utils.UserCacheUtil;
 import jakarta.annotation.Resource;
 import lombok.extern.log4j.Log4j2;
@@ -113,6 +117,42 @@ public class UserServiceImpl extends MPJBaseServiceImpl<UserMapper, User> implem
         .innerJoin(UserRole.class, UserRole::getUserId, User::getId)
         .innerJoin(Role.class, Role::getId, UserRole::getRoleId)
         .selectCollection(Role.class, UserRoleBo::getRoles)
+    );
+  }
+  
+  @Override
+  public UserInfoVO getCurrLoginUser() {
+    String token = HttpServletUtils.getRequestHeader(HttpServletUtils.TOKEN_KEY);
+    log.info("当前登录用户token：{}",token);
+    Long userId = JwtUtil.getPayLoadWithId(token);
+    return baseMapper.selectJoinOne(UserInfoVO.class,
+      new MPJLambdaWrapper<User>()
+        .selectAll(User.class)
+        .eq(User::getId, userId)
+        .leftJoin(UserRole.class, UserRole::getUserId, User::getId)
+        .leftJoin(Role.class, Role::getId, UserRole::getRoleId)
+        .selectCollection(Role.class, UserInfoVO::getRoles)
+        .leftJoin(RolePermission.class, RolePermission::getRoleId, Role::getId)
+        .leftJoin(Permission.class, Permission::getId, RolePermission::getId)
+        .selectCollection(Permission.class, UserInfoVO::getPermissions)
+    );
+  }
+  
+  @Override
+  public MenuVO getMenuByCurrUser() {
+    String token = HttpServletUtils.getRequestHeader(HttpServletUtils.TOKEN_KEY);
+    log.info("当前登录用户token：{}",token);
+    Long userId = JwtUtil.getPayLoadWithId(token);
+    return baseMapper.selectJoinOne(MenuVO.class,
+      new MPJLambdaWrapper<User>()
+        .selectAll(User.class)
+        .eq(User::getId, userId)
+        .eq(Permission::getParentId, 0)
+        .leftJoin(UserRole.class, UserRole::getUserId, User::getId)
+        .leftJoin(RolePermission.class, RolePermission::getRoleId, UserRole::getRoleId)
+        .leftJoin(Permission.class, Permission::getId, RolePermission::getPermissionId)
+        .selectCollection(Permission.class, UserInfoVO::getPermissions,p->p
+          .collection(Permission.class,Permission::getChildren))
     );
   }
   

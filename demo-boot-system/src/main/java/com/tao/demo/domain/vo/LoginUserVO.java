@@ -40,4 +40,10 @@ public class LoginUserVO extends BaseEntity {
     this.username = user.getUsername();
     this.token = token;
   }
+  
+  public LoginUserVO(User user) {
+    this.id = user.getId();
+    this.email = user.getEmail();
+    this.username = user.getUsername();
+  }
 }

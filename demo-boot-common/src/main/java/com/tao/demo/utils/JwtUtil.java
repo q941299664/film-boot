@@ -26,6 +26,8 @@ public class JwtUtil {
    */
   private final static Long EXPIRATION = 60 * 60 * 24L;
   
+  private final static String ID_KEY = "id";
+  
   /**
    * 获取转换后的私钥对象
    *
@@ -104,7 +106,11 @@ public class JwtUtil {
    * @return
    */
   public static Map<String, Object> getPayLoad(String jwsString) {
-    return ((Map<String, Object>) (parseJwtResultJws(jwsString)).getBody());
+    return parseJwtResultJws(jwsString).getBody();
+  }
+  
+  public static Long getPayLoadWithId(String jwsString){
+    return Long.parseLong(String.valueOf(getPayLoad(jwsString).get(ID_KEY)));
   }
   
   /**

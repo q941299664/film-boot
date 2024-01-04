@@ -1,12 +1,17 @@
 package com.tao.demo.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.github.yulichang.annotation.FieldMapping;
 import com.tao.demo.core.domain.BaseEntity;
 import com.tao.demo.enums.PermissionTypeEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,19 +25,25 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("sys_permission_tb")
+@FieldNameConstants
 public class Permission extends BaseEntity {
   
   /**
    * 权限名称
    */
-  @TableField("name")
+  @TableField(value = "name", condition = SqlCondition.LIKE)
   private String name;
-  
   /**
    * 上一级权限ID
    */
   @TableField("parent_id")
   private Long parentId;
+  /**
+   * 子节点
+   */
+  @FieldMapping(tag = Permission.class, thisField = BaseEntity.Fields.id, joinField = Fields.parentId, select = BaseEntity.Fields.id)
+  @TableField(exist = false)
+  private List<Permission> children;
   
   /**
    * 权限类型

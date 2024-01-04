@@ -4,6 +4,7 @@ package com.tao.demo.config.shiro.filter;
 import com.alibaba.fastjson2.JSON;
 import com.tao.demo.core.domain.vo.R;
 import com.tao.demo.enums.REnum;
+import com.tao.demo.utils.HttpServletUtils;
 import com.tao.demo.utils.JwtUtil;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -25,7 +26,7 @@ import java.io.IOException;
 @Component
 @Log4j2
 public class MyAuthorizationFilter extends FormAuthenticationFilter {
-  private static final String TOKEN_KEY = "x-access-token";
+  
   
   @Override
   protected void redirectToLogin(ServletRequest request, ServletResponse response) throws IOException {
@@ -38,7 +39,7 @@ public class MyAuthorizationFilter extends FormAuthenticationFilter {
   protected boolean isAccessAllowed(ServletRequest request, ServletResponse resp, Object mappedValue) {
     // 转换成http的请求和响应
     HttpServletRequest req = (HttpServletRequest) request;
-    String token = req.getHeader(TOKEN_KEY);
+    String token = req.getHeader(HttpServletUtils.TOKEN_KEY);
     log.info("校验是否登录：{}", token);
     if (token == null) {
       return false;
@@ -59,7 +60,7 @@ public class MyAuthorizationFilter extends FormAuthenticationFilter {
     resp.setContentType("application/Json");
     resp.setCharacterEncoding("UTF-8");
     // 检查是否拥有访问权限
-    String token = req.getHeader(TOKEN_KEY);
+    String token = req.getHeader(HttpServletUtils.TOKEN_KEY);
     
     if (!JwtUtil.parseJwt(token)) {
       resp.getWriter().print(JSON.toJSONString(R.error(REnum.INVALID_TOKEN)));
