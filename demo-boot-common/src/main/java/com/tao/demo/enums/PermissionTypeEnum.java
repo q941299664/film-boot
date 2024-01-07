@@ -1,10 +1,8 @@
 package com.tao.demo.enums;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
-import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /**
  * @projectName: film
@@ -15,19 +13,24 @@ import lombok.NoArgsConstructor;
  * @date: 2023/12/20 15:32
  * @version: 1.0
  */
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public enum PermissionTypeEnum {
   /**
    * 菜单权限
    */
-  MENU("1", "menu"),
-  INTERFACE("2", "interface"),
+  MENU(1),
+  /**
+   * 接口权限
+   */
+  INTERFACE(2),
   ;
   
+  /**
+   * 用于数据库存储
+   */
   @EnumValue
-  private String value;
-  @JsonValue
-  private String label;
+  private final Integer permissionType;
+  
+  
 }

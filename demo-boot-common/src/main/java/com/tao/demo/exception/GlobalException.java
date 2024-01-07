@@ -34,6 +34,7 @@ public class GlobalException extends RuntimeException {
   
   public GlobalException(String errorMsg) {
     super(errorMsg);
+    this.errorCode = REnum.UNKNOWN_ERROR.getCode().toString();
     this.errorMsg = errorMsg;
   }
   

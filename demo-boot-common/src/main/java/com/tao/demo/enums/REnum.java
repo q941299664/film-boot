@@ -44,9 +44,9 @@ public enum REnum {
   TOKEN_TIMEOUT(403, "token过期"),
   BE_REPLACED(403, "被挤下线"),
   KICK_OUT(403, "被踢下线"),
+  ;
   
   
-  CUSTOMIZE_ERROR(50001, "自定义异常");
   
   private Integer code;
   private String message;

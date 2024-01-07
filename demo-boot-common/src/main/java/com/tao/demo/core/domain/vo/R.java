@@ -56,7 +56,7 @@ public class R<T> implements Serializable {
   }
   
   public static <T> R<T> error(String msg) {
-    REnum customizeError = REnum.CUSTOMIZE_ERROR;
+    REnum customizeError = REnum.UNKNOWN_ERROR;
     return new R<>(customizeError.getCode(), msg, null);
   }
   

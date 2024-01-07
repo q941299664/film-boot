@@ -3,9 +3,14 @@ package com.tao.demo.domain.entity;
 import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.github.yulichang.annotation.FieldMapping;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.github.yulichang.annotation.EntityMapping;
 import com.tao.demo.core.domain.BaseEntity;
+import com.tao.demo.domain.vo.MenuMetaVO;
 import com.tao.demo.enums.PermissionTypeEnum;
+import com.tao.demo.repeat.FieldRepeat;
+import com.tao.demo.service.PermissionService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -26,6 +31,7 @@ import java.util.List;
 @Accessors(chain = true)
 @TableName("sys_permission_tb")
 @FieldNameConstants
+@FieldRepeat(fields = {"name"}, message = "权限或菜单名称不能重复", serviceClass = PermissionService.class)
 public class Permission extends BaseEntity {
   
   /**
@@ -41,15 +47,17 @@ public class Permission extends BaseEntity {
   /**
    * 子节点
    */
-  @FieldMapping(tag = Permission.class, thisField = BaseEntity.Fields.id, joinField = Fields.parentId, select = BaseEntity.Fields.id)
   @TableField(exist = false)
+  @EntityMapping(thisField = BaseEntity.Fields.id, joinField = Fields.parentId)
   private List<Permission> children;
   
   /**
    * 权限类型
+   * @see PermissionTypeEnum#getPermissionType()
    */
-  @TableField("type")
-  private PermissionTypeEnum type;
+  @JsonValue
+  @TableField("permission_type")
+  private Integer permissionType;
   
   /**
    * 权限字符串
@@ -60,8 +68,8 @@ public class Permission extends BaseEntity {
   /**
    * 权限元数据
    */
-  @TableField("meta")
-  private String meta;
+  @TableField(value = "meta", typeHandler = JacksonTypeHandler.class)
+  private MenuMetaVO meta;
   
   /**
    * 排序依据字段
@@ -73,7 +81,7 @@ public class Permission extends BaseEntity {
   
   public static final String PARENT_ID = "parent_id";
   
-  public static final String TYPE = "type";
+  public static final String PERMISSION_TYPE = "permission_type";
   
   public static final String URI = "uri";
   

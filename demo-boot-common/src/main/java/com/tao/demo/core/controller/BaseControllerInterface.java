@@ -2,6 +2,8 @@ package com.tao.demo.core.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tao.demo.core.domain.BaseEntity;
+import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,7 +20,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 实体
    * @return 新增结果
    */
-  T baseSave(T vo);
+  @PostMapping
+  T baseSave(@Valid @RequestBody T vo);
   
   /**
    * 批量新增
@@ -26,7 +29,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 实体
    * @return 批量新增结果
    */
-  List<T> baseSaveBatch(List<T> vo);
+  @PostMapping("/batch")
+  List<T> baseSaveBatch(@Valid @RequestBody List<T> vo);
   
   /**
    * 根据id删除
@@ -34,7 +38,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param id 主键id
    * @return 删除结果
    */
-  boolean baseRemoveById(K id);
+  @DeleteMapping("/{id}")
+  boolean baseRemoveById(@PathVariable K id);
   
   /**
    * 批量删除
@@ -42,7 +47,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param ids 主键id集合
    * @return 批量删除结果
    */
-  boolean baseRemoveBatchByIds(String ids);
+  @DeleteMapping("/batch/{ids}")
+  boolean baseRemoveBatchByIds(@PathVariable String ids);
   
   /**
    * 更新
@@ -50,7 +56,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 实体
    * @return 更新结果
    */
-  boolean baseUpdateById(T vo);
+  @PutMapping
+  boolean baseUpdateById(@Valid @RequestBody T vo);
   
   /**
    * 批量更新
@@ -58,7 +65,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 实体
    * @return 批量更新结果
    */
-  boolean baseUpdateBatchById(List<T> vo);
+  @PutMapping("/batch")
+  boolean baseUpdateBatchById(@Valid @RequestBody List<T> vo);
   
   /**
    * 根据id查询
@@ -66,7 +74,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param id 主键id
    * @return 查询结果
    */
-  T baseGetById(K id);
+  @GetMapping("/{id}")
+  T baseGetById(@PathVariable K id);
   
   /**
    * 分页查询
@@ -76,7 +85,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo   查询条件
    * @return 查询结果
    */
-  IPage<T> basePage(Integer page, Integer size, T vo);
+  @GetMapping("/page")
+  IPage<T> basePage(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size,@Valid @RequestBody(required = false) T vo);
   
   /**
    * 查询所有
@@ -84,5 +94,6 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 查询条件
    * @return 查询结果
    */
-  List<T> baseList(T vo);
+  @GetMapping
+  List<T> baseList(@Valid @RequestBody(required = false) T vo);
 }

@@ -1,5 +1,5 @@
 
-# 1.1 电影表 (`movie_tb`)
+# 电影表 (`movie_tb`)
 CREATE TABLE IF NOT EXISTS `film_movie_tb` (
     `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '电影ID',
     `title` VARCHAR(255) NOT NULL COMMENT '电影名称',
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `film_movie_tb` (
     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) COMMENT '电影表';
 
-# 1.2 影院表 (`cinema_tb`)
+# 影院表 (`cinema_tb`)
 CREATE TABLE IF NOT EXISTS `film_cinema_tb` (
     `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '影院ID',
     `name` VARCHAR(255) NOT NULL COMMENT '影院名称',
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `film_cinema_tb` (
     `create_id` INT COMMENT '创建者ID',
     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) COMMENT '影院表';
-# 1.3 放映厅表 (`hall_tb`)
+# 放映厅表 (`hall_tb`)
 
 CREATE TABLE IF NOT EXISTS `film_hall_tb` (
     `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '放映厅ID',
@@ -47,8 +47,22 @@ CREATE TABLE IF NOT EXISTS `film_hall_tb` (
     `create_id` INT COMMENT '创建者ID',
     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) COMMENT '放映厅表';
+# 放映厅座位表 (`seat_tb`)
+CREATE TABLE IF NOT EXISTS `film_seat_tb` (
+                                         `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '座位ID',
+                                         `hall_id` BIGINT COMMENT '放映厅ID',
+                                         `row_number` INT COMMENT '行号',
+                                         `seat_number` INT COMMENT '座位号',
+                                         `status` VARCHAR(255) COMMENT '座位状态（例如：可选、已售、损坏等）',
+                                         `deleted` BOOLEAN DEFAULT FALSE COMMENT '删除标志',
+                                         `update_id` BIGINT NOT NULL COMMENT '更新者ID',
+                                         `update_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+                                         `create_id` BIGINT NOT NULL COMMENT '创建者ID',
+                                         `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
+) COMMENT '放映厅座位表';
 
-# 1.4 场次表 (`showtime_tb`)sql
+
+# 场次表 (`showtime_tb`)
 CREATE TABLE IF NOT EXISTS `film_showtime_tb` (
     `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '场次ID',
     `hall_id` INT COMMENT '放映厅ID',
@@ -64,7 +78,7 @@ CREATE TABLE IF NOT EXISTS `film_showtime_tb` (
     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) COMMENT '场次表';
 
-# 1.5 评论表 (`comment_tb`)
+# 评论表 (`comment_tb`)
 
 CREATE TABLE IF NOT EXISTS `film_comment_tb` (
     `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '评论ID',
@@ -80,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `film_comment_tb` (
     `create_time` TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'
 ) COMMENT '评论表';
 
-# 1.6 订单表 (`order_tb`)
+# 订单表 (`order_tb`)
 
 CREATE TABLE IF NOT EXISTS `film_order_tb` (
     `id` BIGINT UNSIGNED PRIMARY KEY AUTO_INCREMENT COMMENT '订单ID',

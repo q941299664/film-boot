@@ -1,7 +1,6 @@
 package com.tao.demo.core.domain;
 
 import com.baomidou.mybatisplus.annotation.*;
-import com.tao.demo.constant.MySqlConditionConstant;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldNameConstants;
@@ -47,7 +46,7 @@ public class BaseEntity implements Serializable, Comparable<BaseEntity> {
   /**
    * 更新者ID
    */
-  @TableField(value = "update_id")
+  @TableField(value = "update_id", fill = FieldFill.INSERT_UPDATE)
   private Long updateId;
   
   /**

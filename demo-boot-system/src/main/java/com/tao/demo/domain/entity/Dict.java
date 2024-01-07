@@ -1,5 +1,6 @@
 package com.tao.demo.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tao.demo.core.domain.BaseEntity;
@@ -25,13 +26,13 @@ public class Dict extends BaseEntity {
   /**
    * 字典名称
    */
-  @TableField("name")
+  @TableField(value = "name", condition = SqlCondition.LIKE)
   private String name;
   
   /**
    * 字典编码
    */
-  @TableField("code")
+  @TableField(value = "code", condition = SqlCondition.LIKE)
   private String code;
   
   /**

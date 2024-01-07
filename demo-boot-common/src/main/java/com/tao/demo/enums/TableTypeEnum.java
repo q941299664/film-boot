@@ -47,7 +47,7 @@ public enum TableTypeEnum {
    */
   private String prefix;
   
-  TableTypeEnum(String name,String modelName, String prefix, String... tables) {
+  TableTypeEnum(String name, String modelName, String prefix, String... tables) {
     this.name = name;
     this.modelName = modelName;
     this.prefix = prefix;

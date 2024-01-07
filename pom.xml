@@ -19,10 +19,10 @@
         <mysql-connector-j.version>8.2.0</mysql-connector-j.version>
         <lombok.version>1.18.30</lombok.version>
         <guava.version>32.0.0-android</guava.version>
-        <hutool-all.version>5.8.22</hutool-all.version>
+        <hutool-all.version>5.8.24</hutool-all.version>
         <mybatis-plus-boot-starter.version>3.5.5</mybatis-plus-boot-starter.version>
         <mybatis-spring.version>3.0.3</mybatis-spring.version>
-        <mybatis-plus-join-boot-starter.version>1.4.5</mybatis-plus-join-boot-starter.version>
+        <mybatis-plus-join-boot-starter.version>1.4.9</mybatis-plus-join-boot-starter.version>
         <mybatis-plus.version>3.5.3.2</mybatis-plus.version>
         <mybatis-plus-generator.version>3.5.3.2</mybatis-plus-generator.version>
         <freemarker.version>2.3.31</freemarker.version>
@@ -46,6 +46,7 @@
         <maven-plugins.version>3.1</maven-plugins.version>
         <spring-webmvc.version>6.0.11</spring-webmvc.version>
         <tomcat-servlet-api.version>10.1.17</tomcat-servlet-api.version>
+        <commons-lang3.version>3.12.0</commons-lang3.version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -330,6 +331,12 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring-boot-starter-data-redis.version}</version>
+            </dependency>
+            <!-- ArrayUtils工具类 -->
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

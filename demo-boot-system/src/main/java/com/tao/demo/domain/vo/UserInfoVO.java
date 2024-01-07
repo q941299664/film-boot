@@ -1,7 +1,6 @@
 package com.tao.demo.domain.vo;
 
 import com.tao.demo.core.domain.BaseEntity;
-import com.tao.demo.domain.entity.Permission;
 import com.tao.demo.domain.entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +31,4 @@ public class UserInfoVO extends BaseEntity {
   private String email;
   
   private List<Role> roles;
-  
-  private List<Permission> permissions;
 }

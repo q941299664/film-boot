@@ -3,6 +3,7 @@ package com.tao.demo.service.impl;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import com.tao.demo.domain.entity.Permission;
+import com.tao.demo.enums.PermissionTypeEnum;
 import com.tao.demo.exception.GlobalException;
 import com.tao.demo.service.PermissionService;
 import com.tao.demo.service.ShiroService;
@@ -58,7 +59,7 @@ public class ShiroServiceImpl implements ShiroService {
     // 放行 end ----------------------------------------------------------
     
     // 从数据库或缓存中查取出来的url与resources对应则不会被拦截 放行
-    List<Permission> permissionList = permissionService.getInterfacePermissions();
+    List<Permission> permissionList = permissionService.getPermissionsByType(PermissionTypeEnum.INTERFACE);
     if (!CollectionUtils.isEmpty(permissionList)) {
       permissionList.forEach(permission -> {
         if (StringUtils.isNotBlank(permission.getUri())) {

@@ -1,5 +1,6 @@
 package com.tao.demo.domain.vo;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.tao.demo.core.domain.BaseEntity;
 import com.tao.demo.domain.entity.Permission;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @projectName: demo-boot
@@ -22,10 +24,30 @@ import java.util.List;
 @AllArgsConstructor
 public class MenuVO extends BaseEntity {
   /**
-   * 用户名
+   * 路径
    */
-  private String username;
+  private String path;
+  /**
+   * 邮箱
+   */
+  private String name;
+  /**
+   * 路由元数据
+   */
+  private MenuMetaVO meta;
   
+  /**
+   * 子菜单
+   */
+  private List<MenuVO> children;
   
-  private List<Permission> permissions;
+  public MenuVO(Permission permission){
+    BeanUtil.copyProperties(permission, this, "children");
+    this.path = permission.getUri();
+    List<Permission> children = permission.getChildren();
+    if (children == null || children.isEmpty()) {
+      return;
+    }
+    this.children = children.stream().map(MenuVO::new).collect(Collectors.toList());
+  }
 }

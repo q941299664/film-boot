@@ -1,5 +1,6 @@
 package com.tao.demo.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tao.demo.core.domain.BaseEntity;
@@ -31,7 +32,7 @@ public class Role extends BaseEntity {
   /**
    * 角色名称
    */
-  @TableField("name")
+  @TableField(value = "name", condition = SqlCondition.LIKE)
   private String name;
   
   @TableField("is_default")

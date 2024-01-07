@@ -3,7 +3,6 @@ package com.tao.demo.service;
 import com.github.yulichang.extension.mapping.base.MPJDeepService;
 import com.tao.demo.domain.bo.UserRoleBo;
 import com.tao.demo.domain.entity.User;
-import com.tao.demo.domain.vo.MenuVO;
 import com.tao.demo.domain.vo.UserInfoVO;
 
 /**
@@ -60,12 +59,6 @@ public interface UserService extends MPJDeepService<User> {
    * @return 用户信息
    */
   UserInfoVO getCurrLoginUser();
-  
-  /**
-   * 获取用户菜单
-   * @return 菜单信息
-   */
-  MenuVO getMenuByCurrUser();
   
   
 }
