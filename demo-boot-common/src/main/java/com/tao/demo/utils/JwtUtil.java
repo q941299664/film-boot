@@ -1,6 +1,7 @@
 package com.tao.demo.utils;
 
 import com.google.common.collect.Maps;
+import com.tao.demo.exception.GlobalException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.log4j.Log4j2;
@@ -72,6 +73,9 @@ public class JwtUtil {
       result = true;
     } catch (JwtException e) {
       log.error("解析JWT失败");
+    } catch (Exception e) {
+      log.error("解析JWT失败");
+      throw new GlobalException("无效登录凭证 ");
     }
     return result;
   }

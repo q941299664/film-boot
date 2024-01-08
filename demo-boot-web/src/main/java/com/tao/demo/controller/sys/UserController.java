@@ -106,7 +106,7 @@ public class UserController extends BaseController<UserService, User> {
    */
   @PostMapping("/logout")
   public R<String> logout(){
-    return R.error(REnum.NOT_LOGIN);
+    return R.error(403, "登出成功");
   }
   
 }

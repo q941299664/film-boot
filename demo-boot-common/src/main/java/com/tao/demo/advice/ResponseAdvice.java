@@ -28,7 +28,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
@@ -88,7 +87,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
    * @param e 忽略参数异常
    * @return 自定义错误返回体
    */
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(MissingServletRequestParameterException.class)
   public Object parameterMissingExceptionHandler(MissingServletRequestParameterException e) {
     log.error("缺少Servlet请求参数异常", e);
@@ -101,7 +99,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
    * @param e 缺少请求体异常
    * @return 自定义错误返回体
    */
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public Object parameterBodyMissingExceptionHandler(HttpMessageNotReadableException e) {
     log.error("参数请求体异常", e);
@@ -115,7 +112,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
    * @return 自定义错误返回体
    */
   
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler(BindException.class)
   public Object validExceptionHandler(BindException e) {
     log.error("方法参数绑定错误(实体对象传参)", e);
@@ -140,7 +136,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
    * @param e 参数验证异常
    * @return 自定义错误返回体
    */
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler({MethodArgumentNotValidException.class})
   public Object parameterExceptionHandler(MethodArgumentNotValidException e) {
     List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
@@ -155,7 +150,6 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
    * @param e 参数验证异常
    * @return 自定义错误返回体
    */
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
   @ExceptionHandler({ConstraintViolationException.class})
   public Object parameterExceptionHandler(ConstraintViolationException e) {
     log.error("@RequestParam/@PathVariable参数触发校验规则", e);
