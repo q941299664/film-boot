@@ -1,8 +1,10 @@
 package com.tao.demo.core.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.github.yulichang.extension.mapping.base.MPJDeepService;
 import com.tao.demo.core.domain.BaseEntity;
@@ -124,9 +126,9 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @return 分页列表
    */
   @Override
-  public IPage<T> basePage(@RequestParam(defaultValue = "1") Integer page, @RequestParam(defaultValue = "10") Integer size,@Valid @RequestBody(required = false) T vo) {
+  public IPage<T> basePage(@PathVariable Integer page,@PathVariable Integer size,@Valid @RequestParam(required = false) T vo) {
     IPage<T> iPage = new Page<>(page, size);
-    QueryWrapper<T> queryWrapper = new QueryWrapper<>(vo);
+    LambdaQueryWrapper<T> queryWrapper = Wrappers.lambdaQuery(vo);
     return baseService.page(iPage, queryWrapper);
   }
   
@@ -137,8 +139,8 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @return 所有记录
    */
   @Override
-  public List<T> baseList(@Valid @RequestBody(required = false) T vo) {
-    QueryWrapper<T> queryWrapper = new QueryWrapper<>(vo);
+  public List<T> baseList(@Valid  @RequestParam(required = false) T vo) {
+    QueryWrapper<T> queryWrapper = Wrappers.query(vo);
     return baseService.listDeep(queryWrapper);
   }
   

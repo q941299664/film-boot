@@ -85,8 +85,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo   查询条件
    * @return 查询结果
    */
-  @GetMapping("/page")
-  IPage<T> basePage(@RequestParam(defaultValue = "1") Integer page,@RequestParam(defaultValue = "10") Integer size,@Valid @RequestBody(required = false) T vo);
+  @GetMapping("/page/{page}/{size}")
+  IPage<T> basePage(@PathVariable Integer page,@PathVariable Integer size,@Valid  @RequestParam(required = false) T vo);
   
   /**
    * 查询所有
@@ -95,5 +95,5 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @return 查询结果
    */
   @GetMapping
-  List<T> baseList(@Valid @RequestBody(required = false) T vo);
+  List<T> baseList(@Valid  @RequestParam(required = false) T vo);
 }
