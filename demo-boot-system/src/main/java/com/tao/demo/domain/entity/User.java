@@ -34,7 +34,7 @@ public class User extends BaseEntity {
   /**
    * 密码
    */
-  @TableField("password")
+  @TableField(value = "password", select = false)
   private String password;
   
   /**

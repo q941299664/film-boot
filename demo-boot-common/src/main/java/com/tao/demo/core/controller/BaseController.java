@@ -33,7 +33,7 @@ import java.util.List;
 
 @Validated
 @Log4j2
-public abstract class BaseController<S extends MPJDeepService<T>, T extends BaseEntity> implements BaseControllerInterface<T, Integer> {
+public abstract class BaseController<S extends MPJDeepService<T>, T extends BaseEntity> implements BaseControllerInterface<T, Long> {
   /**
    * 通过@Resource注解注入baseService
    */
@@ -69,7 +69,7 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @return 删除结果
    */
   @Override
-  public boolean baseRemoveById(@PathVariable Integer id) {
+  public boolean baseRemoveById(@PathVariable Long id) {
     return baseService.removeById(id);
   }
   
@@ -113,7 +113,7 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @return 实体
    */
   @Override
-  public T baseGetById( Integer id) {
+  public T baseGetById( Long id) {
     return baseService.getById(id);
   }
   

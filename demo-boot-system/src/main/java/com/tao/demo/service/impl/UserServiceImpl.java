@@ -72,6 +72,7 @@ public class UserServiceImpl extends MPJBaseServiceImpl<UserMapper, User> implem
   @Override
   public User getByEmail(String email) {
     return new LambdaQueryChainWrapper<>(baseMapper)
+      .select(User.class, i-> true)
       .eq(User::getEmail, email)
       .one();
   }
