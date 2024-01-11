@@ -3,10 +3,14 @@ package com.tao.demo.domain.entity;
 import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.github.yulichang.annotation.EntityMapping;
 import com.tao.demo.core.domain.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import lombok.experimental.FieldNameConstants;
+
+import java.util.List;
 
 /**
  * <p>
@@ -20,6 +24,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @TableName("sys_dict_data_tb")
+@FieldNameConstants
 public class DictData extends BaseEntity {
   
   /**
@@ -28,10 +33,14 @@ public class DictData extends BaseEntity {
   @TableField("parent_id")
   private Long parentId;
   
+  @TableField(exist = false)
+  @EntityMapping(thisField = BaseEntity.Fields.id, joinField = DictData.Fields.parentId)
+  private List<DictData> children;
+  
   /**
    * 字典编码
    */
-  @TableField(value = "code", condition = SqlCondition.LIKE)
+  @TableField(value = "code")
   private String code;
   
   /**

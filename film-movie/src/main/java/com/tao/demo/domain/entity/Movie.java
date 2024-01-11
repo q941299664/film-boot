@@ -1,5 +1,6 @@
 package com.tao.demo.domain.entity;
 
+import com.baomidou.mybatisplus.annotation.SqlCondition;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.tao.demo.core.domain.BaseEntity;
@@ -11,9 +12,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
- * <p>
  * 电影表
- * </p>
  *
  * @author LiTao
  * @since 2024-01-04
@@ -29,25 +28,25 @@ public class Movie extends BaseEntity {
     /**
      * 电影名称
      */
-    @TableField("title")
+    @TableField(value = "title", condition = SqlCondition.LIKE)
     private String title;
 
     /**
      * 国外名称
      */
-    @TableField("original_title")
+    @TableField(value = "original_title", condition = SqlCondition.LIKE)
     private String originalTitle;
 
     /**
      * 演职人员
      */
-    @TableField("cast_and_crew")
+    @TableField(value = "cast_and_crew", condition = SqlCondition.LIKE)
     private String castAndCrew;
 
     /**
      * 导演
      */
-    @TableField("director")
+    @TableField(value = "director", condition = SqlCondition.LIKE)
     private String director;
 
     /**
@@ -65,7 +64,7 @@ public class Movie extends BaseEntity {
     /**
      * 电影类型
      */
-    @TableField("genre")
+    @TableField(value = "genre", condition = SqlCondition.LIKE)
     private String genre;
 
     /**

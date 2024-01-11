@@ -13,9 +13,7 @@ import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,6 +44,7 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @param vo 实体
    * @return 新增结果
    */
+  @PostMapping
   @Override
   public T baseSave(@Valid @RequestBody T vo) {
     return baseService.save(vo) ? vo : null;
@@ -57,6 +56,7 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @param voList 实体
    * @return 批量新增结果
    */
+  @PostMapping("/batch")
   @Override
   public List<T> baseSaveBatch(@Valid @RequestBody List<T> voList) {
     return baseService.saveBatch(voList) ? voList : null;
@@ -68,6 +68,8 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @param id 主键id
    * @return 删除结果
    */
+
+  @DeleteMapping("/{id}")
   @Override
   public boolean baseRemoveById(@PathVariable Long id) {
     return baseService.removeById(id);
@@ -79,6 +81,7 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @param ids 主键id
    * @return 删除结果
    */
+  @DeleteMapping("/batch/{ids}")
   @Override
   public boolean baseRemoveBatchByIds(@PathVariable String ids){
     return baseService.removeByIds(MybatisUtil.ids2List(ids));
@@ -101,6 +104,7 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @param vo 实体
    * @return 批量更新结果
    */
+  @PutMapping("/batch")
   @Override
   public boolean baseUpdateBatchById(@Valid @RequestBody List<T> vo) {
     return baseService.updateBatchById(vo);
@@ -125,8 +129,9 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @param vo   查询条件
    * @return 分页列表
    */
+  @PostMapping("/page/{page}/{size}")
   @Override
-  public IPage<T> basePage(@PathVariable Integer page,@PathVariable Integer size,@Valid @RequestParam(required = false) T vo) {
+  public IPage<T> basePage(@PathVariable Integer page,@PathVariable Integer size,@RequestBody(required = false) @Validated T vo) {
     IPage<T> iPage = new Page<>(page, size);
     LambdaQueryWrapper<T> queryWrapper = Wrappers.lambdaQuery(vo);
     return baseService.page(iPage, queryWrapper);
@@ -138,8 +143,9 @@ public abstract class BaseController<S extends MPJDeepService<T>, T extends Base
    * @param vo 查询条件
    * @return 所有记录
    */
+  @PostMapping("/query")
   @Override
-  public List<T> baseList(@Valid  @RequestParam(required = false) T vo) {
+  public List<T> baseList(@Validated @RequestBody(required = false) T vo) {
     QueryWrapper<T> queryWrapper = Wrappers.query(vo);
     return baseService.listDeep(queryWrapper);
   }

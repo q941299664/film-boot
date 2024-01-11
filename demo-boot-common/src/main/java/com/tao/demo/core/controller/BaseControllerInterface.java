@@ -3,6 +3,7 @@ package com.tao.demo.core.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.tao.demo.core.domain.BaseEntity;
 import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 实体
    * @return 新增结果
    */
-  @PostMapping
+  
   T baseSave(@Valid @RequestBody T vo);
   
   /**
@@ -29,7 +30,7 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 实体
    * @return 批量新增结果
    */
-  @PostMapping("/batch")
+  
   List<T> baseSaveBatch(@Valid @RequestBody List<T> vo);
   
   /**
@@ -38,7 +39,7 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param id 主键id
    * @return 删除结果
    */
-  @DeleteMapping("/{id}")
+  
   boolean baseRemoveById(@PathVariable K id);
   
   /**
@@ -47,7 +48,7 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param ids 主键id集合
    * @return 批量删除结果
    */
-  @DeleteMapping("/batch/{ids}")
+
   boolean baseRemoveBatchByIds(@PathVariable String ids);
   
   /**
@@ -65,7 +66,7 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 实体
    * @return 批量更新结果
    */
-  @PutMapping("/batch")
+
   boolean baseUpdateBatchById(@Valid @RequestBody List<T> vo);
   
   /**
@@ -85,8 +86,8 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo   查询条件
    * @return 查询结果
    */
-  @GetMapping("/page/{page}/{size}")
-  IPage<T> basePage(@PathVariable Integer page,@PathVariable Integer size,@Valid  @RequestParam(required = false) T vo);
+
+  IPage<T> basePage(@PathVariable Integer page,@PathVariable Integer size,@Validated @RequestBody(required = false) T vo);
   
   /**
    * 查询所有
@@ -94,6 +95,6 @@ public interface BaseControllerInterface<T extends BaseEntity, K> {
    * @param vo 查询条件
    * @return 查询结果
    */
-  @GetMapping
-  List<T> baseList(@Valid  @RequestParam(required = false) T vo);
+
+  List<T> baseList(@Validated @RequestBody(required = false)  T vo);
 }
